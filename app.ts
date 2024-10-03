@@ -1,5 +1,6 @@
 import appsettings = require("./appsettings");
 import express = require("express");
+import { init } from "./data/sql";
 
 const app = express();
 
@@ -31,6 +32,8 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 async function iniciar() {
+	init(appsettings.sqlPool);
+
 	const server = app.listen(appsettings.port, appsettings.localIp, () => {
 		console.log(`Express server listening on port: ${appsettings.localIp}:${appsettings.port}`);
 	});
