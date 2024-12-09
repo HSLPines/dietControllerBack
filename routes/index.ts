@@ -1,10 +1,22 @@
+
 import express = require("express");
-import wrap = require("../utils/wrap");
+import usersRouter = require("./users");
+import wrap = require("../../utils/wrap");
+import refeicoesRouter = require("./refeicoes"); 
 
-const router = express.Router();
 
-router.get("/", wrap(async (req: express.Request, res: express.Response) => {
-	res.json("Oi, mundo!");
+const app = express();
+app.use(express.json());
+
+app.get("/", wrap(async (req: any, res: { json: (arg0: { message: string; }) => void; }) => {
+    res.json({ message: "Bem-vindo ao DietController API!" });
 }));
 
-export = router;
+app.use("/usuarios", usersRouter);
+
+app.use("/refeicoes", refeicoesRouter);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});
